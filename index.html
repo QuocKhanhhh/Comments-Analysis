@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>Comments Analysis</title>
+</head>
+<body>
+    <h1>Phân Tích Cảm Xúc Bình Luận Phim</h1>
+    <form method="POST" action="/">
+        <label for="movie">Chọn Phim:</label>
+        <select name="movie" id="movie">
+            {% for movie in movie_list %}
+                <option value="{{ movie }}" {% if movie == selected_movie %}selected{% endif %}>{{ movie }}</option>
+            {% endfor %}
+        </select>
+        <input type="submit" value="Xem Kết Quả">
+    </form>
+
+    {% if results %}
+        <h2>Kết quả phân tích cho {{ selected_movie }}:</h2>
+        
+        <div>
+            <h3>Biểu đồ cảm xúc:</h3>
+            {{ pie_chart|safe }} <!-- Hiển thị biểu đồ tròn -->
+        </div>
+        
+        <div>
+            <h3>Biểu đồ thời gian cảm xúc:</h3>
+            {{ time_chart|safe }} <!-- Hiển thị biểu đồ thời gian -->
+        </div>
+
+        
+    {% else %}
+        <p>Không có dữ liệu cho phim {{ selected_movie }}.</p>
+    {% endif %}
+</body>
+</html>
